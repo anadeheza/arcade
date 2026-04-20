@@ -178,7 +178,8 @@ function update() {
                     player.vy = -25;
                     applyShake(10, 20);
                 } else {
-                    jumpSound.play();
+                    const s = jumpSound.cloneNode(); 
+                    s.play();
                     applyShake(2, 5);
                 }
         }
