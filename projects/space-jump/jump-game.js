@@ -15,7 +15,7 @@ const platBrokenImg = new Image();
 platBrokenImg.src = 'assets/platBroken.png';
 
 let score = 0;
-let gravity = 0.4;
+let gravity = 0.6;
 let cameraY = 0;
 let shakeTime = 0;
 let shakeIntensity = 0;
@@ -34,7 +34,7 @@ const player = {
     height: 50,
     vy: 0,
     vx: 0,
-    jumpForce: -12,
+    jumpForce: -15,
     emoji: "👾"
 };
 
@@ -150,6 +150,27 @@ function update() {
     if(player.x < -20) player.x = GAME_WIDTH;
     if(player.x > GAME_WIDTH) player.x = -20;
 
+    platforms = platforms.filter(p => p.y - cameraY < canvas.height + 100);
+
+    while (platforms.length < platformCount) {
+        let highestPlatY = Math.min(...platforms.map(p => p.y));
+        
+        let jumpHeight = (Math.pow(player.jumpForce, 2) / (2 * gravity));
+        let platDist = 100 + Math.random() * (jumpHeight - 120);
+
+        platforms.push({
+            x: Math.random() * (GAME_WIDTH - 100),
+            y: highestPlatY - platDist,
+            w: 100,
+            h: 20,
+            type: Math.random() > 0.8 ? "breaking" : "normal",
+            hasBooster: Math.random() > 0.9,
+            active: true
+        });
+        
+        score++;
+        scoreElement.innerText = score;
+    }
     platforms.forEach(p => {
         if(!p.active) return;
 
@@ -182,21 +203,6 @@ function update() {
                     s.play();
                     applyShake(2, 5);
                 }
-        }
-
-        if (screenY > canvas.height) {
-            let highestPlat  = Math.min(...platforms.map(plat => plat.y));
-            let jumpHeight = (Math.pow(player.jumpForce, 2) / (2 * gravity));
-            let platDist = 100 + Math.random() * (jumpHeight -120)
-
-            p.y = highestPlat - platDist;
-            p.x = Math.random() * (GAME_WIDTH - p.w);
-            p.active = true;
-            p.type = Math.random() > 0.8 ? "breaking" : "normal";
-            p.hasBooster = Math.random() > 0.9;
-
-            score++;
-            scoreElement.innerText = score;
         }
     });
 
