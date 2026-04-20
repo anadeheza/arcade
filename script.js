@@ -24,13 +24,11 @@ buttons.forEach(btn => {
 });
 
 function loadGame(name) {
-    if(!name) {
-        console.warn("no valid game name");
-        return;
-    }
 
     const viewport = document.getElementById('viewport');
     const title = document.getElementById('game-title');
+    if (!title) return;
+
     const gameList = document.querySelector('.game-list');
 
     gameList.classList.remove('ready-to-play');

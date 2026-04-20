@@ -356,7 +356,6 @@ function initGame() {
     }
 
     errores = 0;
-    document.getElementById("errores").innerText = errores;
     document.getElementById("win-screen").style.display = "none";
 
     if (numSelected) {
