@@ -24,6 +24,11 @@ buttons.forEach(btn => {
 });
 
 function loadGame(name) {
+    if(!name) {
+        console.warn("no valid game name");
+        return;
+    }
+
     const viewport = document.getElementById('viewport');
     const title = document.getElementById('game-title');
     const gameList = document.querySelector('.game-list');
@@ -35,7 +40,7 @@ function loadGame(name) {
     });
     
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    const clickedBtn = document.querySelector(`[onclick="loadGame('${name}')"]`);
+    const clickedBtn = document.querySelector(`[data-game="${name}"]`);
     if (clickedBtn) clickedBtn.classList.add('active');
     
     if (name === 'home') {

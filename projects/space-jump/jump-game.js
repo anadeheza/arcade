@@ -208,10 +208,12 @@ function update() {
     ctx.restore();
 
     if (player.y - cameraY > canvas.height) {
-        gameOver = true;
-        deathSound.play();
-        drawGameOver();
-        return;
+        if(!gameOver) {
+            gameOver = true;
+            deathSound.play();
+            drawGameOver();
+            return;
+        }
     }
 
     requestAnimationFrame(update);
