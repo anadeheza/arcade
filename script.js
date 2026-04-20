@@ -4,7 +4,7 @@ const viewport = document.getElementById('viewport');
 
 const hoverSound = new Audio('assets/select.wav');
 const startSound = new Audio('assets/start.wav');
-hoverSound.volume = 0.8;
+hoverSound.volume = 1;
 startSound.volume = 0.5;
 
 buttons.forEach(btn => {
