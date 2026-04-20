@@ -56,7 +56,7 @@ function loadGame(name) {
             </div>`;
 
         const talkSound = new Audio('assets/blip.wav')
-        talkSound.volume = 0.2
+        talkSound.volume = 0.1;
 
         function typeEffect(element, text, speed, callback) {
             let i = 0;

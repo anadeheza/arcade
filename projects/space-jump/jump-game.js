@@ -24,8 +24,8 @@ const deathSound = new Audio('assets/death.wav');
 const jumpSound = new Audio('assets/jump.wav'); 
 const boosterSound = new Audio('assets/booster.wav'); 
 deathSound.volume = 1;
-jumpSound.volume = 0.5; 
-boosterSound.volume = 1;
+jumpSound.volume = 1; 
+boosterSound.volume = 0.7;
 
 const player = {
     x: 0,
