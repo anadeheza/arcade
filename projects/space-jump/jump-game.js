@@ -15,7 +15,7 @@ const platBrokenImg = new Image();
 platBrokenImg.src = 'assets/platBroken.png';
 
 let score = 0;
-let gravity = 0.6;
+let gravity = 0.4;
 let cameraY = 0;
 let shakeTime = 0;
 let shakeIntensity = 0;
