@@ -15,10 +15,17 @@ const platBrokenImg = new Image();
 platBrokenImg.src = 'assets/platBroken.png';
 
 let score = 0;
-let gravity = 0.25;
+let gravity = 0.4;
 let cameraY = 0;
 let shakeTime = 0;
 let shakeIntensity = 0;
+
+const deathSound = new Audio('assets/death.wav');
+const jumpSound = new Audio('assets/jump.wav'); 
+const boosterSound = new Audio('assets/booster.wav'); 
+deathSound.volume = 1;
+jumpSound.volume = 0.5; 
+boosterSound.volume = 1;
 
 const player = {
     x: 0,
@@ -160,15 +167,18 @@ function update() {
             player.y > p.y && player.y < p.y + p.h) {
 
                 player.vy = player.jumpForce;
+
                 firstJump = true;
                 if (p.type === "breaking") {
                      p.active = false;
                 }
 
                 if (p.hasBooster) {
+                    boosterSound.play();
                     player.vy = -25;
                     applyShake(10, 20);
                 } else {
+                    jumpSound.play();
                     applyShake(2, 5);
                 }
         }
@@ -198,6 +208,7 @@ function update() {
 
     if (player.y - cameraY > canvas.height) {
         gameOver = true;
+        deathSound.play();
         drawGameOver();
         return;
     }

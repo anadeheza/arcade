@@ -4,8 +4,8 @@ const viewport = document.getElementById('viewport');
 
 const hoverSound = new Audio('assets/select.wav');
 const startSound = new Audio('assets/start.wav');
-hoverSound.volume = 1;
-startSound.volume = 1;
+hoverSound.volume = 0.8;
+startSound.volume = 0.5;
 
 buttons.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
