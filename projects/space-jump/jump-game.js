@@ -21,7 +21,7 @@ let shakeTime = 0;
 let shakeIntensity = 0;
 
 const deathSound = new Audio('assets/death.wav');
-const jumpSound = new Audio('projects/space-jump/assets/jump.wav'); 
+const jumpSound = new Audio('assets/jump.wav'); 
 const boosterSound = new Audio('assets/booster.wav'); 
 deathSound.volume = 1;
 jumpSound.volume = 1; 
