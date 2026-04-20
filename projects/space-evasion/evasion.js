@@ -1,6 +1,12 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
+const GAME_WIDTH = 600;
+let offsetX = 0;
+
+let spawnRate = 1000;
+let minSpawnRate = 200;
+let lastSpawnTime = 0;
 
 const deathSound = new Audio('assets/death.wav');
 const spawnSound = new Audio('assets/shoot.wav'); 
@@ -21,6 +27,7 @@ const player = {
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    offsetX = (canvas.width - GAME_WIDTH) / 2;
     player.x = canvas.width / 2;
     player.y = canvas.height - 100;
 }
@@ -35,7 +42,7 @@ function spawnObstacle() {
     if(gameOver) return;
     
     const size = Math.floor(Math.random() * 30) + 20;
-    const x = Math.random() * (canvas.width - size);
+    const x = offsetX + (Math.random() * (GAME_WIDTH - size));
     obstacles.push({ x, y: -size, size });
     
     const s = spawnSound.cloneNode();
@@ -43,12 +50,23 @@ function spawnObstacle() {
     s.play().catch(e => console.log("Esperando interacción"));
 }
 
-function update() {
+function update(currentTime) {
     if (gameOver) {
         return; 
     } 
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (lastSpawnTime === 0) {
+        lastSpawnTime = currentTime;
+    }
+    if(currentTime - lastSpawnTime > spawnRate) {
+        spawnObstacle();
+        lastSpawnTime = currentTime;
+
+        if(spawnRate > minSpawnRate) {
+            spawnRate -= 5;
+        }
+    }
 
     ctx.font = "40px Arial";
     ctx.textAlign = "center"; 
@@ -97,9 +115,11 @@ function drawGameOver() {
 }
 
 window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && player.x > 30) player.x -= 30;
-    if (e.key === 'ArrowRight' && player.x < canvas.width - 30) player.x += 30;
+    if(gameOver) return;
+
+    if (e.key === 'ArrowLeft' && player.x > offsetX + 30) player.x -= 30;
+    if (e.key === 'ArrowRight' && player.x < offsetX + GAME_WIDTH - 30) player.x += 30;
 });
 
 setInterval(spawnObstacle, 1000);
-update();
+requestAnimationFrame(update);
